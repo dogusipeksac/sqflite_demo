@@ -9,7 +9,7 @@ class DBHelper {
 
   //ilerde çalışıcak
   Future<Database> get db async {
-    _db ??= await initializedDb();
+    _db = await initializedDb();
     return _db;
   }
 

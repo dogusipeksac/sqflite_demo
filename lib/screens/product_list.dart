@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite_demo/data/dbHelper.dart';
 import 'package:sqflite_demo/models/product.dart';
+import 'package:sqflite_demo/screens/product_detail.dart';
+
+import 'product_add.dart';
 
 class ProductList extends StatefulWidget {
   @override
@@ -17,9 +20,7 @@ class _ProductListState extends State {
 
   @override
   void initState() {
-    var productsFuture=dbHelper.getProducts();
-    productsFuture.then((data) => products=data);
-    super.initState();
+    getProducts();
   }
 
   @override
@@ -29,23 +30,65 @@ class _ProductListState extends State {
         title: Text("Ürün Listesi"),
       ),
       body: buildProductList(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          gotoProductAdd();
+        },
+        child: Icon(Icons.add),
+        tooltip: "Yeni ürün ekle",
+      ),
     );
   }
 
   ListView buildProductList() {
     return ListView.builder(
-    itemCount: productCount,
-    itemBuilder: (BuildContext context,int position){
-      return Card(
-        color: Colors.cyan,
-        elevation: 2.0,
-        child: ListTile(
-          leading: const CircleAvatar(backgroundColor: Colors.black12,child: Text("P"),),
-          title: Text(products[position].name),
-          subtitle: Text(products[position].description),
-          onTap: (){},
-        ),
-      );
+        itemCount: productCount,
+        itemBuilder: (BuildContext context, int position) {
+          return Card(
+            color: Colors.cyan,
+            elevation: 2.0,
+            child: ListTile(
+              leading: const CircleAvatar(
+                backgroundColor: Colors.black12,
+                child: Text("P"),
+              ),
+              title: Text(products[position].name),
+              subtitle: Text(products[position].description),
+              onTap: () {
+                goToDetail(products[position]);
+              },
+            ),
+          );
+        });
+  }
+
+  void gotoProductAdd() async {
+    bool result = await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const ProductAdd()));
+    if (result != null) {
+      if (result) {
+        getProducts();
+      }
+    }
+  }
+
+  void getProducts() async{
+    var productsFuture = dbHelper.getProducts();
+    productsFuture.then((data) {
+      setState(() {
+        products = data;
+        productCount=data.length;
+      });
+
     });
+
+  }
+  void goToDetail(Product product)async{
+    bool result=await Navigator.push(context,MaterialPageRoute(builder: (context)=>ProductDetail(product)));
+    if(result!=null){
+      if(result){
+        getProducts();
+      }
+    }
   }
 }

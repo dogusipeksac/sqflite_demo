@@ -1,10 +1,10 @@
 class Product{
-  late int id;
+  var id;
   late String name;
   late String description;
   late double unitPrice;
 
-  Product({required this.name, required this.description, required this.unitPrice});
+  Product({required this.name,required this.description,required this.unitPrice});
   Product.withId({required this.id, required this.name, required this.description, required this.unitPrice});
 
 
@@ -19,10 +19,10 @@ class Product{
     return map;
   }
   Product.fromObject(dynamic o){
-    id=int.tryParse(o["id"])!;
+    id=o["id"]!;
     name=o["name"];
     description=o["description"];
-    unitPrice=double.tryParse(o["unitPrice"])!;
+    unitPrice=double.tryParse(o["unitPrice"].toString())!;
   }
 
 }
