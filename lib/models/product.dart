@@ -1,5 +1,5 @@
 class Product{
-  var id;
+  late int id;
   late String name;
   late String description;
   late double unitPrice;

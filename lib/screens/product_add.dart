@@ -23,7 +23,7 @@ class ProductAddState extends State {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text("Yeni ürün ekle"),
+        title: const Text("Yeni ürün ekle"),
       ),
       body: Padding(
         padding: EdgeInsets.all(30.0),
@@ -48,14 +48,14 @@ class ProductAddState extends State {
 
   buildDescriptionField() {
     return TextField(
-      decoration: InputDecoration(labelText: "Ürün açıklaması"),
+      decoration: const InputDecoration(labelText: "Ürün açıklaması"),
       controller: textDescription,
     );
   }
 
   buildUnitPriceField() {
     return TextField(
-      decoration: InputDecoration(labelText: "Birim fiyatı"),
+      decoration: const InputDecoration(labelText: "Birim fiyatı"),
       controller: textUnitPrice,
     );
   }
@@ -65,7 +65,7 @@ class ProductAddState extends State {
       onPressed: () {
         addProduct();
       },
-      child: Text("Ekle"),
+      child: const Text("Ekle"),
     );
   }
 
